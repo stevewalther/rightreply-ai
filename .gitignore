@@ -1,0 +1,28 @@
+# Secrets — never commit these
+.env
+.env.local
+.env.production
+*.key
+
+# Supabase local dev
+.supabase/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Deno cache
+.deno/
+
+# Node (if any tooling pulls it in)
+node_modules/
+
+# Build artifacts
+dist/
+tmp/
