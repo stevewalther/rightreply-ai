@@ -433,6 +433,43 @@ function buildSystemPrompt(bv: BrandVoiceProfile): string {
   parts.push(`- Do NOT discuss other patients, customers, or cases`);
   parts.push(`- Respond ONLY with the response text — no preamble, no quotes, no explanation`);
 
+  parts.push(`\nRESPONSE SAFETY CONSTRAINTS — ABSOLUTE, NO EXCEPTIONS:`);
+  parts.push(`1. NEVER claim the business owner has taken or will take any specific action`);
+  parts.push(`   in response to this review. Do not say "I've looked into this," "I've`);
+  parts.push(`   spoken with my team," "we've investigated," "I've addressed this with`);
+  parts.push(`   staff," "we've made changes," or any similar claim of action already taken.`);
+  parts.push(`   You do not know what the owner has or hasn't done.`);
+  parts.push(`2. NEVER offer, promise, or imply any of the following:`);
+  parts.push(`   - Discounts (percentage off, dollar off, "something off your next visit")`);
+  parts.push(`   - Free products or services ("a free meal," "complimentary service," "on us")`);
+  parts.push(`   - Refunds or credits ("we'd like to make it right financially," "we'll refund")`);
+  parts.push(`   - Comps or upgrades ("upgrade you," "comp your next visit")`);
+  parts.push(`   - Gifts or gestures ("a small token," "a gift card," "something special")`);
+  parts.push(`   - Redo of work ("we'll come back and fix it," "we'll redo the job")`);
+  parts.push(`   - Any commitment with financial cost to the business owner`);
+  parts.push(`3. NEVER make any promise or commitment the business owner hasn't explicitly`);
+  parts.push(`   authorized, including:`);
+  parts.push(`   - Scheduling promises ("we'll call you Monday," "expect a call this week")`);
+  parts.push(`   - Policy changes ("we've updated our process," "this won't happen again")`);
+  parts.push(`   - Staffing actions ("we've spoken with the employee," "addressed with management")`);
+  parts.push(`   - Follow-up promises ("we'll follow up," "I'll personally make sure")`);
+  parts.push(`   - Guarantees ("guaranteed," "we guarantee," "I promise")`);
+  parts.push(`   - Timeline commitments ("within 24 hours," "by end of week")`);
+  parts.push(`4. ALWAYS use invitational language instead of commitments:`);
+  parts.push(`   - YES: "We'd love the chance to hear more — please give us a call at..."`);
+  parts.push(`   - NO: "I'll call you to discuss this."`);
+  parts.push(`   - YES: "If you'd like to discuss this further, please reach out to us."`);
+  parts.push(`   - NO: "We'll reach out to make this right."`);
+  parts.push(`5. NEVER fabricate details not present in the review:`);
+  parts.push(`   - Do not invent what service was provided unless stated in the review`);
+  parts.push(`   - Do not name staff members unless the reviewer named them`);
+  parts.push(`   - Do not reference specific dates, times, or events unless mentioned`);
+  parts.push(`   - Do not attribute emotions or intentions beyond what they wrote`);
+  parts.push(`6. For complaints: acknowledge → thank → invite contact. That's it.`);
+  parts.push(`   Do NOT add a fourth step. Do NOT resolve, fix, compensate, or promise.`);
+  parts.push(`7. For positive reviews: thank → personalize → welcome back. That's it.`);
+  parts.push(`   Do NOT add offers, discounts, or "next time" incentives.`);
+
   return parts.join("\n");
 }
 

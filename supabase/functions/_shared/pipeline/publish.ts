@@ -26,6 +26,7 @@ import {
   publishReplyToGBP,
   type GBPPublishResult,
 } from "./gbp-publisher.ts";
+import { validateResponseSafety } from "./response-safety-validator.ts";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -427,6 +428,58 @@ async function runPublishGate(
     failures.push(
       `DUPLICATE: response ${existingPublished[0].id} already published at ${existingPublished[0].published_at}`,
     );
+  }
+
+  // ── Condition 13: Response safety validation ──
+
+  const safetyResult = validateResponseSafety(response.draft_text);
+
+  if (!safetyResult.passed) {
+    for (const violation of safetyResult.violations) {
+      failures.push(`SAFETY: ${violation}`);
+    }
+
+    // Emit response.safety_validation_failed event
+    await emitEvent({
+      event_type: EVENT_TYPES.RESPONSE_SAFETY_VALIDATION_FAILED,
+      tenant_id: review.tenant_id,
+      source_channel: "google_gbp",
+      source_system: "rightreply_pipeline",
+      actor_type: "system",
+      actor_id: "publish_gate",
+      generation_class: "system_generated",
+      authority_rank: 90,
+      is_authoritative: true,
+      object_type: "response",
+      object_id: response.id,
+      correlation_id: crypto.randomUUID(),
+      idempotency_key: `response.safety_failed:${response.id}:v${response.response_version}`,
+      status: "failed",
+      risk_flags: ["safety_violation"],
+      privacy_level: "customer_confidential",
+      payload: {
+        summary: `Response v${response.response_version} failed safety validation: ${safetyResult.violations.length} violation(s)`,
+        facts: {
+          violation_count: safetyResult.violations.length,
+          violations: safetyResult.violations,
+          response_version: response.response_version,
+        },
+        refs: {
+          review_id: review.id,
+          response_id: response.id,
+        },
+      },
+    });
+
+    // Reset response status to draft_generated so it can be regenerated
+    const now = new Date().toISOString();
+    await db
+      .from("responses")
+      .update({
+        status: "draft_generated",
+        updated_at: now,
+      })
+      .eq("id", response.id);
   }
 
   return {

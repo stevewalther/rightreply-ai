@@ -33,6 +33,7 @@ export const EVENT_TYPES = {
   RESPONSE_PUBLISH_ATTEMPTED: "response.publish_attempted",
   RESPONSE_PUBLISHED: "response.published",
   RESPONSE_PUBLISH_FAILED: "response.publish_failed",
+  RESPONSE_SAFETY_VALIDATION_FAILED: "response.safety_validation_failed",
 
   // Governance
   APPROVAL_RECORDED: "approval.recorded",
