@@ -14,7 +14,10 @@ export const EVENT_TYPES = {
   // Tenant / config
   TENANT_CREATED: "tenant.created",
   OAUTH_CONNECTED: "oauth.connected",
+  OAUTH_DISCONNECTED: "oauth.disconnected",
+  OAUTH_REFRESH_SUCCEEDED: "oauth.refresh_succeeded",
   OAUTH_REFRESH_FAILED: "oauth.refresh_failed",
+  OAUTH_REVOKED: "oauth.revoked",
   BRAND_VOICE_APPROVED: "brand_voice.approved",
   SETTINGS_UPDATED: "settings.updated",
   AUTOMATION_PAUSED: "automation.paused",
